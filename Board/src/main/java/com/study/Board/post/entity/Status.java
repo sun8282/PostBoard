@@ -1,4 +1,4 @@
-package com.study.Board.entity.posts;
+package com.study.Board.post.entity;
 
 public enum Status {
     PENDING,

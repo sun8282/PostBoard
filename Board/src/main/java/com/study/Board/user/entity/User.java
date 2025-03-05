@@ -1,4 +1,4 @@
-package com.study.Board.entity.users;
+package com.study.Board.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

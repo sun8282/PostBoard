@@ -1,6 +1,5 @@
-package com.study.Board.entity.users;
+package com.study.Board.user.entity;
 
-import com.study.Board.entity.posts.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

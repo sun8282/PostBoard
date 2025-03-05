@@ -1,4 +1,4 @@
-package com.study.Board.entity.admin;
+package com.study.Board.admin.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
