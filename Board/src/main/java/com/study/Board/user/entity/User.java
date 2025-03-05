@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "app_user")
 public class User {
 
     @Id

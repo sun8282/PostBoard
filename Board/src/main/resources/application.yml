@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    application: Board
+    url: jdbc:postgresql://localhost:5432/boardDB
+    username: postgres
+    password: 8vtqkxWlGZobwXDm
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
