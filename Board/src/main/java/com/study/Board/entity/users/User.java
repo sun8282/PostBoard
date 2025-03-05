@@ -1,16 +1,16 @@
-package com.study.Board.entity;
+package com.study.Board.entity.users;
 
-import com.study.Board.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,18 @@ public class Users {
     @Column(nullable = false, unique = true, length = 100)
     private String userEmail;
 
+    @Column(nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
 
+    public boolean isAdmin(){
+        return this.role == Role.ADMIN;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
+    }
 }

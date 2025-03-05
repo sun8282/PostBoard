@@ -1,4 +1,4 @@
-package com.study.Board.entity.enums;
+package com.study.Board.entity.users;
 
 public enum Grade {
     NEWBIE,
