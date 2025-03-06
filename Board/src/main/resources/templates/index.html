@@ -6,10 +6,12 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>Hello</h1>
-
-</div> <!-- /container -->
-
+    <div th:include="fragments/header :: header"></div>
+    <h2>Posts</h2>
+    <div th:each="post : ${posts}">
+        <h3 th:text="${post.title}">Post Title</h3>
+        <p th:text="${post.content}">Post Content</p>
+    </div>
+    <div th:include="fragments/footer :: footer"></div>
 </body>
 </html>
