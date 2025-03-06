@@ -16,4 +16,8 @@
 
 ![image](https://github.com/user-attachments/assets/d9722f25-0b4d-4853-85ed-b0726c0f9190)
 
+<h3>Git Flow</h3>
+
+![image](https://github.com/user-attachments/assets/7d19ff6b-abf5-49cd-b832-9aabda778205)
+
 
