@@ -18,32 +18,29 @@ import java.util.List;
 @Table(name = "app_user")
 public class User implements UserDetails {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    @Column(nullable = false, length = 50, unique = true)
-    private String userid;
+    @Column(nullable = false, unique = true, length = 100)
+    private String userEmail;
 
-    @Column(nullable = false,unique = true, length = 100)
-    private String useremail;
+    @Column(nullable = false, length = 50)
+    private String userName;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, length = 20)
-    private String username;
+    @Column(nullable = false, length = 50, unique = true)
+    private String userId;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private Role role = Role.USER;
 
     public boolean isAdmin(){
         return this.role == Role.ADMIN;
-    }
-
-    public void encodePassword(PasswordEncoder passwordEncoder){
-        this.password = passwordEncoder.encode(this.password);
     }
 
     @Override
@@ -53,6 +50,6 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return userName;
     }
 }

@@ -10,19 +10,19 @@
 <h2>register</h2>
 
 <form action="/register" method="post">
-    <label for="userid">UserId:</label>
-    <input type="text" name="userid" required /><br><br>
+    <label for="userEmail">Email</label>
+    <input type="email" id="userEmail" name="userEmail" required />
 
-    <label for="useremail">Email:</label>
-    <input type="text" name="useremail" required /><br><br>
+    <label for="userName">Username</label>
+    <input type="text" id="userName" name="userName" required />
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required /><br><br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
 
-    <label for="username">Name:</label>
-    <input type="password" name="username" required /><br><br>
+    <label for="userId">User ID</label>
+    <input type="text" id="userId" name="userId" required />
 
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
 </form>
 <div th:include="fragments/footer :: footer"></div>
 </body>

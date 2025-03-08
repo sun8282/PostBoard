@@ -12,12 +12,12 @@ import lombok.Setter;
 public class UserImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     @Column(nullable = false)
     private String filePath; // 이미지 파일 경로
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(nullable = false, name ="user_id")
     private User userId;
 }

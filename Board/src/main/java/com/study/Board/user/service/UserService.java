@@ -19,12 +19,11 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        // 비밀번호 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }
 
