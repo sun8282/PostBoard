@@ -7,11 +7,23 @@
 <body>
 
 <div th:include="fragments/header :: header"></div>
-<h2>Posts</h2>
-<div th:each="post : ${posts}">
-    <h3 th:text="${post.title}">Post Title</h3>
-    <p th:text="${post.content}">Post Content</p>
-</div>
+<h2>register</h2>
+
+<form action="/register" method="post">
+    <label for="userid">UserId:</label>
+    <input type="text" name="userid" required /><br><br>
+
+    <label for="useremail">Email:</label>
+    <input type="text" name="useremail" required /><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" required /><br><br>
+
+    <label for="username">Name:</label>
+    <input type="password" name="username" required /><br><br>
+
+    <button type="submit">Login</button>
+</form>
 <div th:include="fragments/footer :: footer"></div>
 </body>
 </html>

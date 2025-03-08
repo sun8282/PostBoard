@@ -22,14 +22,17 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
-    private String userName;
+    @Column(nullable = false, length = 50, unique = true)
+    private String userid;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String userEmail;
+    @Column(nullable = false,unique = true, length = 100)
+    private String useremail;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String password;
+
+    @Column(nullable = false, length = 20)
+    private String username;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -50,6 +53,6 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 }
