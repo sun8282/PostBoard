@@ -9,12 +9,12 @@
 <div th:insert="~{fragments/header :: header}"></div>
 <h2>login</h2>
 
-<form action="/login" method="post">
-    <label for="userId">id:</label>
-    <input type="text" name="userId" required /><br><br>
+<form method="post" action="/login">
+    <label for="userId">User ID</label>
+    <input type="text" id="userId" name="userId" required />
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required /><br><br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
 
     <button type="submit">Login</button>
 </form>

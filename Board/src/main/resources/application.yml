@@ -7,6 +7,9 @@ spring:
     web:
       resources:
         static-locations: classpath:/static/
+  security:
+    csrf:
+      enabled: false
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -15,8 +18,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
-logging:
-  level:
-    root: INFO
-    com.study: DEBUG
+
 

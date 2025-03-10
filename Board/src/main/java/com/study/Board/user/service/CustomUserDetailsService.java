@@ -3,8 +3,8 @@ package com.study.Board.user.service;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,17 +17,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        // userId로 사용자 정보 조회
 
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserId(),
-                user.getPassword(),
-                user.getAuthorities()
-        );
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with userId: " + userId));
+        return new CustomUserDetails(user);
     }
 }

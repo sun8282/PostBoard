@@ -8,10 +8,14 @@ import jakarta.persistence.Persistence;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-
-
+@ServletComponentScan
 
 public class BoardApplication {
 

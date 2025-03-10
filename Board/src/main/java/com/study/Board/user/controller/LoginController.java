@@ -1,6 +1,5 @@
 package com.study.Board.user.controller;
 
-import com.study.Board.user.dto.LoginDto;
 import com.study.Board.user.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -23,7 +22,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("loginDto", new LoginDto());
+        //model.addAttribute("loginDto", new LoginDto());
         return "login";
     }
 
@@ -31,6 +30,7 @@ public class LoginController {
     public String loginUser(@RequestParam String userId, @RequestParam String password) {
         log.info("로그인 시도 - userId: {}", userId);
         log.info("로그인 시도 - password: {}", password);
+        System.out.println("🔥🔥🔥 로그인 요청이 들어왔습니다!");
         return "redirect:/";
     }
 

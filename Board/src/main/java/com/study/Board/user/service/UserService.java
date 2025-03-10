@@ -22,11 +22,8 @@ public class UserService{
     }
 
     public void registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-    }
-    public User findUserByUserName(String userName) {
-        return userRepository.findByUserName(userName);
     }
 
 
