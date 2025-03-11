@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
+<style>
+    .profile-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+</style>
 <body>
 
 <div th:insert="~{fragments/header :: header}"></div>
 <h1 th:text="${currentUser.getUsername()}"></h1>
+<div class="profile-container">
+    <img class="profile-image" th:if="${currentUser != null}" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image">
+</div>
 <h2>Posts</h2>
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}">Post Title</h3>

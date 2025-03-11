@@ -24,7 +24,6 @@ public class appController {
     @GetMapping("/")
     public String showHome(Model model){
         UserDetails currentUser = SecurityUtil.getCurrentUser();
-        System.out.println(currentUser.getUsername());
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
         model.addAttribute("currentUser",currentUser);

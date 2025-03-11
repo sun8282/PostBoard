@@ -36,7 +36,7 @@ public class UserDto {
         user.setUserName(this.userName);
         user.setUserId(this.userId);
         user.setPassword(passwordEncoder.encode(this.password));
-        user.setProfileImage(profileImagePath != null ? profileImagePath : "default-profile.png");
+        user.setProfileImage(profileImagePath != null ? profileImagePath : "/uploads/default-profile.png");
         return user;
     }
 }

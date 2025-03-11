@@ -45,7 +45,6 @@ public class RegisterController {
 
         String profileImagePath = saveProfileImage(userDto.getProfileImage());
 
-        // 사용자 객체 생성 (이미지 경로 포함)
         User user = userDto.toEntity(passwordEncoder,profileImagePath);
         userService.registerUser(user);
 
