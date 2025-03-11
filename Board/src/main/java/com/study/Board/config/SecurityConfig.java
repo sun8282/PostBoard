@@ -67,8 +67,6 @@ public class SecurityConfig {
                                                 AuthenticationException exception) throws IOException {
                 String userId = request.getParameter("userId");
                 String password = request.getParameter("password");
-                System.out.println(userId);
-                System.out.println(password);
                 response.sendRedirect("/login?error=true");
             }
         };

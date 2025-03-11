@@ -26,6 +26,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getPassword();
     }
 
+    public String getUserId(){
+        return user.getUserId();
+    }
+
     public String getProfileImage() {
         return user.getProfileImage();
     }

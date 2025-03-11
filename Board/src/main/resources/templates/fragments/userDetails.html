@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <style>
+        .profile-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .user-info {
+            margin-top: 20px;
+        }
+        .edit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="profile-container">
+    <h1>User Profile</h1>
+
+    <!-- 프로필 이미지 -->
+    <img th:src="@{${user.profileImage}}" alt="Profile Image" class="profile-img">
+
+    <div class="user-info">
+        <p><strong>Username:</strong> <span th:text="${user.userName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.userEmail}"></span></p>
+        <p><strong>User ID:</strong> <span th:text="${user.userId}"></span></p>
+    </div>
+
+    <!-- 프로필 편집 버튼 -->
+    <a th:href="@{/user/edit/{userId}(userId=${user.userId})}">
+        <button class="edit-btn">Edit Profile</button>
+    </a>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

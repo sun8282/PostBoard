@@ -23,7 +23,9 @@
 <div th:insert="~{fragments/header :: header}"></div>
 <h1 th:text="${currentUser.getUsername()}"></h1>
 <div class="profile-container">
-    <img class="profile-image" th:if="${currentUser != null}" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image">
+        <a th:href="@{'/user/' + ${currentUser.getUserId()}}">
+        <img class="profile-image" th:if="${currentUser != null}" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image">
+        </a>
 </div>
 <h2>Posts</h2>
 <div th:each="post : ${posts}">
