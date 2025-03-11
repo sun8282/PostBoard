@@ -1,15 +1,16 @@
 package com.study.Board.user.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -17,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "app_user")
 public class User implements UserDetails {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @Column(name = "profile_image")
     private String profileImage;
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return this.role == Role.ADMIN;
     }
 
@@ -55,8 +55,6 @@ public class User implements UserDetails {
     public String getUsername() {
         return userName;
     }
-
-
 
 
 }

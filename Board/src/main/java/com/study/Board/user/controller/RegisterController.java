@@ -4,8 +4,7 @@ import com.study.Board.user.dto.UserDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.service.ProfileService;
 import com.study.Board.user.service.UserService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +19,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import jakarta.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,11 +46,13 @@ public class RegisterController {
 
         String profileImagePath = saveProfileImage(userDto.getProfileImage());
 
-        User user = userDto.toEntity(passwordEncoder,profileImagePath);
+        User user = userDto.toEntity(passwordEncoder, profileImagePath);
+
         userService.registerUser(user);
 
         return "redirect:/login";
     }
+
     private String saveProfileImage(MultipartFile profileImage) {
         if (profileImage != null && !profileImage.isEmpty()) {
             try {

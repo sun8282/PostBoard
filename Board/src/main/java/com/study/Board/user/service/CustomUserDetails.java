@@ -1,7 +1,7 @@
 package com.study.Board.user.service;
 
 import com.study.Board.user.entity.User;
-import jakarta.persistence.Transient;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,12 +26,16 @@ public class CustomUserDetails implements UserDetails {
         return user.getPassword();
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return user.getUserId();
     }
 
     public String getProfileImage() {
         return user.getProfileImage();
+    }
+
+    public String getUserEmail() {
+        return user.getUserEmail();
     }
 
     @Override

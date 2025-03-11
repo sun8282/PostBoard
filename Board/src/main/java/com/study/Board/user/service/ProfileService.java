@@ -14,8 +14,8 @@ public class ProfileService {
 
     private final String uploadDir = "src/main/resources/static/uploads/";
 
-
     public String saveProfileImage(MultipartFile file) throws IOException {
+
         if (file.isEmpty()) {
             throw new IllegalArgumentException("파일이 비어 있습니다.");
         }
