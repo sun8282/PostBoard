@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 20)
     private Role role = Role.USER;
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     public boolean isAdmin(){
         return this.role == Role.ADMIN;
     }

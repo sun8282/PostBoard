@@ -27,12 +27,15 @@ public class UserDto {
     @NotBlank(message = "User ID is mandatory")
     private String userId;
 
+    private String profileImage;
+
     public User toEntity(BCryptPasswordEncoder passwordEncoder) {
         User user = new User();
         user.setUserEmail(this.userEmail);
         user.setUserName(this.userName);
         user.setUserId(this.userId);
         user.setPassword(passwordEncoder.encode(this.password));
+        user.setProfileImage(this.profileImage != null ? this.profileImage : "default-profile.png");
         return user;
     }
 }

@@ -27,6 +27,7 @@ public class appController {
         System.out.println(currentUser.getUsername());
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
+        model.addAttribute("currentUser",currentUser);
         return "index";
     }
 }
