@@ -15,7 +15,7 @@ public class UserImages {
     private Long Id;
 
     @Column(nullable = false)
-    private String filePath; // 이미지 파일 경로
+    private String filePath;
 
     @ManyToOne
     @JoinColumn(nullable = false, name ="user_id")

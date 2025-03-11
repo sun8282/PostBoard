@@ -1,8 +1,10 @@
 package com.study.Board.user.controller;
 
 import com.study.Board.user.service.UserService;
+import com.study.Board.util.SecurityUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,28 +23,7 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        //model.addAttribute("loginDto", new LoginDto());
+    public String showLoginForm() {
         return "login";
-    }
-
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String userId, @RequestParam String password) {
-        log.info("로그인 시도 - userId: {}", userId);
-        log.info("로그인 시도 - password: {}", password);
-        System.out.println("🔥🔥🔥 로그인 요청이 들어왔습니다!");
-        return "redirect:/";
-    }
-
-    @GetMapping("/loginSuccess")
-    public String loginSuccess(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        System.out.println("Logged in user: " + user.getUsername());
-        return "redirect:/";
-    }
-
-    @GetMapping("/loginFailure")
-    public String loginFailure() {
-        return "login?error=true";
     }
 }

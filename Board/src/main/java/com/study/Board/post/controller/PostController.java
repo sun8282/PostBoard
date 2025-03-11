@@ -19,10 +19,4 @@ public class PostController {
         this.postRepository = postRepository;
     }
 
-    @GetMapping("/")
-    public String showIndex(Model model){
-        List<Post> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
-        return "index";
-    }
 }

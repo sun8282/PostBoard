@@ -32,7 +32,7 @@ public class UserDto {
         user.setUserEmail(this.userEmail);
         user.setUserName(this.userName);
         user.setUserId(this.userId);
-        user.setPassword(passwordEncoder.encode(this.password)); // 비밀번호 암호화
+        user.setPassword(passwordEncoder.encode(this.password));
         return user;
     }
 }
