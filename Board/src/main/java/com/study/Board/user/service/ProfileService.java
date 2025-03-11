@@ -12,7 +12,8 @@ import java.util.UUID;
 @Service
 public class ProfileService {
 
-    private final String uploadDir = "uploads/";
+    private final String uploadDir = "src/main/resources/static/uploads/";
+
 
     public String saveProfileImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
