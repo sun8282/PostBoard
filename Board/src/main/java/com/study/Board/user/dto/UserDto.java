@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -27,15 +28,15 @@ public class UserDto {
     @NotBlank(message = "User ID is mandatory")
     private String userId;
 
-    private String profileImage;
+    private MultipartFile profileImage;
 
-    public User toEntity(BCryptPasswordEncoder passwordEncoder) {
+    public User toEntity(BCryptPasswordEncoder passwordEncoder, String profileImagePath) {
         User user = new User();
         user.setUserEmail(this.userEmail);
         user.setUserName(this.userName);
         user.setUserId(this.userId);
         user.setPassword(passwordEncoder.encode(this.password));
-        user.setProfileImage(this.profileImage != null ? this.profileImage : "default-profile.png");
+        user.setProfileImage(profileImagePath != null ? profileImagePath : "default-profile.png");
         return user;
     }
 }

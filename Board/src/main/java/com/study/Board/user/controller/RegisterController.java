@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 @Controller
 @RequiredArgsConstructor
 public class RegisterController {
@@ -38,18 +43,29 @@ public class RegisterController {
             return "register";
         }
 
-        if (profileImage != null && !profileImage.isEmpty()) {
-            try {
-                String savedImagePath = profileService.saveProfileImage(profileImage);
-                userDto.setProfileImage(savedImagePath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        User user = userDto.toEntity(passwordEncoder);
+        String profileImagePath = saveProfileImage(userDto.getProfileImage());
+
+        // 사용자 객체 생성 (이미지 경로 포함)
+        User user = userDto.toEntity(passwordEncoder,profileImagePath);
         userService.registerUser(user);
 
         return "redirect:/login";
     }
+    private String saveProfileImage(MultipartFile profileImage) {
+        if (profileImage != null && !profileImage.isEmpty()) {
+            try {
+                String uploadDir = "src/main/resources/static/uploads/";
 
+                String originalFilename = profileImage.getOriginalFilename();
+                Path uploadPath = Path.of(uploadDir, originalFilename);
+
+                Files.copy(profileImage.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
+
+                return "/uploads/" + originalFilename;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }
