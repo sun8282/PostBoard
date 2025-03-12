@@ -13,7 +13,8 @@ import java.util.UUID;
 public class ProfileService {
 
     private final String UPLOAD_DIR = "src/main/resources/static/uploads/profileImages/";
-
+    //private final String UPLOAD_DIR = "/uploads/profileImages/";
+    // private final String UPLOAD_DIR = "C:\\Users\\user\\Desktop\\image\\";
     public String saveProfileImage(MultipartFile file) throws IOException {
         if(file.isEmpty()){
             return null;
@@ -24,7 +25,7 @@ public class ProfileService {
         Files.createDirectories(path.getParent());
 
         Files.write(path, file.getBytes());
-
-        return fileName;
+        System.out.println("프로필 이미지 저장");
+        return UPLOAD_DIR+fileName;
     }
 }
