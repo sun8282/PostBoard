@@ -13,10 +13,10 @@ public class PostController {
 
     private final PostRepository postRepository;
 
-    @GetMapping("/post")
+    @GetMapping("/new")
     public String showPostForm() {
         return "createPost";
     }
-    
+
 
 }

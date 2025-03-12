@@ -12,7 +12,7 @@ import java.util.UUID;
 @Service
 public class ProfileService {
 
-    private final String uploadDir = "src/main/resources/static/uploads/";
+    private final String uploadDir = "src/main/resources/static/uploads/profileImages/";
 
     public String saveProfileImage(MultipartFile file) throws IOException {
         if(file.isEmpty()){
