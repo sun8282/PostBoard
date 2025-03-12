@@ -81,15 +81,17 @@
     const formData = new FormData();
     formData.append("imageFile", file);
 
-    fetch("/upload-image", {
+    fetch("/api/posts/upload-image", {
         method: "POST",
         body: formData
     })
     .then(response => response.json())
     .then(data => {
         if (data.url) {
+            const image = document.createElement("img");
+            image.src = data.url;
+            document.getElementById("imagePreview").append(image)
             document.getElementById("content").value += `\n<img src="${data.url}" alt="Uploaded Image">`;
-            document.getElementById("imagePreview").innerHTML += `<img src="${data.url}" width="200px" style="margin-top:10px;">`;
         }
     })
     .catch(error => console.error("Image upload failed:", error));

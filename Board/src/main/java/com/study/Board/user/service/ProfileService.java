@@ -12,14 +12,14 @@ import java.util.UUID;
 @Service
 public class ProfileService {
 
-    private final String uploadDir = "src/main/resources/static/uploads/profileImages/";
+    private final String UPLOAD_DIR = "src/main/resources/static/uploads/profileImages/";
 
     public String saveProfileImage(MultipartFile file) throws IOException {
         if(file.isEmpty()){
             return null;
         }
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(uploadDir + fileName);
+        Path path = Paths.get(UPLOAD_DIR + fileName);
 
         Files.createDirectories(path.getParent());
 
