@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
@@ -38,12 +39,18 @@ public class UserController {
     }
 
     @PatchMapping("/user/{userId}")
-    public String editResponse(@ModelAttribute("userDto") @Valid UserDto userDto,
+    public String editResponse(Model model, @AuthenticationPrincipal CustomUserDetails currentUser,
+                               @ModelAttribute("userDto") @Valid UserDto userDto,
                                BindingResult bindingResult,
                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage
     ) throws IOException {
         if (bindingResult.hasErrors()) {
-            return "/user/{userId}/edit";
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println("Error: " + error.getDefaultMessage());
+            }
+            model.addAttribute("userDto", new UserDto());
+            model.addAttribute("currentUser", currentUser);
+            return "userEdit";
         }
         String profileImagePath = profileService.saveProfileImage(profileImage);
         userService.updateUser(userDto, profileImagePath);
