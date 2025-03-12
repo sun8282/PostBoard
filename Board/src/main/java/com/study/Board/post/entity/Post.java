@@ -15,16 +15,23 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 300)
     private String content;
+
+    @Column(nullable = false)
+    private String category;
+
+    @Column(name = "profile_image")
+    private String profileImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User author;
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

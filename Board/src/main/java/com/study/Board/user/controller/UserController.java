@@ -20,25 +20,26 @@ import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     private final ProfileService profileService;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public String userDetails(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         model.addAttribute("currentUser", currentUser);
         return "userDetails";
     }
 
-    @GetMapping("/user/{userId}/edit")
+    @GetMapping("/{userId}/edit")
     public String userEdit(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         model.addAttribute("userDto", new UserDto());
         model.addAttribute("currentUser", currentUser);
         return "userEdit";
     }
 
-    @PatchMapping("/user/{userId}")
+    @PatchMapping("/{userId}")
     public String editResponse(Model model, @AuthenticationPrincipal CustomUserDetails currentUser,
                                @ModelAttribute("userDto") @Valid UserDto userDto,
                                BindingResult bindingResult,

@@ -1,10 +1,12 @@
 package com.study.Board.user.entity;
 
+import com.study.Board.post.entity.Post;
 import jakarta.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,16 +37,15 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 50, unique = true)
     private String userId;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<Post>();;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Role role = Role.USER;
 
     @Column(name = "profile_image")
     private String profileImage;
-
-    public boolean isAdmin() {
-        return this.role == Role.ADMIN;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
