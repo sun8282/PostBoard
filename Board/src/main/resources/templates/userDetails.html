@@ -44,7 +44,7 @@
         <p><strong>User ID:</strong> <span th:text="${currentUser.getUserId()}"></span></p>
     </div>
 
-    <a th:href="@{/user/edit/{userId}(userId=${currentUser.getUserId()})}">
+    <a th:href="@{/user/{userId}/edit(userId=${currentUser.getUserId()})}">
         <button class="edit-btn">Edit Profile</button>
     </a>
 </div>

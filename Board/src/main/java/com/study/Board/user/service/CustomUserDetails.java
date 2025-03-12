@@ -2,6 +2,8 @@ package com.study.Board.user.service;
 
 import com.study.Board.user.entity.User;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

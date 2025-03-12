@@ -1,8 +1,6 @@
 package com.study.Board.user.dto;
 
-import com.study.Board.user.entity.User;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.AllArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Email;
@@ -15,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
 
     @NotBlank(message = "Email is mandatory")
@@ -32,14 +31,5 @@ public class UserDto {
 
     private MultipartFile profileImage;
 
-    public User toEntity(BCryptPasswordEncoder passwordEncoder, String profileImagePath) {
-        User user = new User();
-        user.setUserEmail(this.userEmail);
-        user.setUserName(this.userName);
-        user.setUserId(this.userId);
-        user.setPassword(passwordEncoder.encode(this.password));
-        user.setProfileImage(profileImagePath != null ? profileImagePath : "/uploads/default-profile.png");
-        return user;
-    }
 }
 

@@ -12,12 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class LoginController {
 
-    private final UserService userService;
-
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";

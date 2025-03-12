@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <style>
+        .profile-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .user-info {
+            margin-top: 20px;
+        }
+        .edit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+            .file-input {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="profile-container">
+    <h1>User Profile Edit</h1>
+    <form th:action="@{/user/{userId}(userId=${currentUser.getUserId()})}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PATCH"/>
+        <div class="profile-container" onclick="document.getElementById('profileInput').click();">
+            <img id="profilePreview" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image" class="profile-img">
+            <input type="file" id="profileInput" name="profileImage" class="file-input" accept="image/*"
+                   onchange="previewImage(event)">
+        </div>
+
+        <div class="user-info">
+            <p><strong>Username:</strong> <input th:value="${currentUser.getUsername()}"/></p>
+            <p><strong>Email:</strong> <input th:value="${currentUser.getUserEmail()}"/></p>
+            <p><strong>User ID:</strong> <input th:value="${currentUser.getUserId()}"/></p>
+        </div>
+
+        <button type="submit" class="edit-btn">submit</button>
+    </form>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            document.getElementById('profilePreview').src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+</html>
