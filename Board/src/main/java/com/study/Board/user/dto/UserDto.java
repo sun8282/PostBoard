@@ -1,5 +1,6 @@
 package com.study.Board.user.dto;
 
+import com.study.Board.user.entity.User;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,11 +26,21 @@ public class UserDto {
     @NotBlank(message = "User ID is mandatory")
     private String userId;
 
-
     private MultipartFile profileImage;
 
     public Object getProfileImage(){
         return (profileImage == null || profileImage.isEmpty()) ? "/image/profileImage/default-profile.png" : profileImage;
+    }
+
+    public User toEntity(String encodedPassword, String profileImagePath) {
+        return User.builder()
+                .userEmail(userEmail)
+                .userName(userName)
+                .password(password)
+                .userId(userId)
+                .password(encodedPassword)
+                .profileImage(profileImagePath)
+                .build();
     }
 }
 

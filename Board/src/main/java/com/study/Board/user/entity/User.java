@@ -1,8 +1,10 @@
 package com.study.Board.user.entity;
 
 import com.study.Board.post.entity.Post;
+import com.study.Board.user.dto.UserDto;
 import jakarta.persistence.*;
 
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -56,5 +58,19 @@ public class User implements UserDetails {
         return userName;
     }
 
+    @Builder
+    private User(String userEmail, String userName, String password, String userId, String profileImage) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.password = password;
+        this.userId = userId;
+        this.profileImage = profileImage;
+    }
 
+    public void updateInfo(UserDto userDto, String profileImagePath) {
+        this.userName = userDto.getUserName();
+        this.userEmail = userDto.getUserEmail();
+        this.userId = userDto.getUserId();
+        this.profileImage = profileImagePath;
+    }
 }

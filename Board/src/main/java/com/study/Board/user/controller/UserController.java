@@ -55,6 +55,6 @@ public class UserController {
         }
         String profileImagePath = profileService.saveProfileImage(profileImage);
         userService.updateUser(userDto, profileImagePath);
-        return "redirect:/login";
+        return "redirect:/";
     }
 }

@@ -3,15 +3,13 @@ package com.study.Board.user.service;
 import com.study.Board.user.dto.UserDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -19,33 +17,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public void registerUser(UserDto userDto, String profileImagePath) {
 
-        User user = new User();
-        setUserInfo(userDto, profileImagePath, user);
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        User newUser = userDto.toEntity(encodedPassword, profileImagePath);
 
-        userRepository.save(user);
+        userRepository.save(newUser);
     }
 
+    @Transactional
     public void updateUser(UserDto userDto, String profileImagePath) {
 
-        Optional<User> optionalUser = userRepository.findByUserId(userDto.getUserId());
-        if (optionalUser.isEmpty()) {
-            throw new UsernameNotFoundException("User with ID " + userDto.getUserId() + " not found.");
-        }
-        User user = optionalUser.get();
-        setUserInfo(userDto, profileImagePath, user);
-
-        userRepository.save(user);
-    }
-
-    private void setUserInfo(UserDto userDto, String profileImagePath, User user) {
-
-        user.setUserId(userDto.getUserId());
-        user.setUserName(userDto.getUserName());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setUserEmail(userDto.getUserEmail());
-        user.setProfileImage(profileImagePath);
+        User findUser = userRepository.findByUserId(userDto.getUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("User with ID " + userDto.getUserId() + " not found."));
+        findUser.updateInfo(userDto, profileImagePath);
     }
 }
 
