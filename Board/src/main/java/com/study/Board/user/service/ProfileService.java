@@ -14,8 +14,8 @@ public class ProfileService {
 
     //private final String UPLOAD_DIR = "src/main/resources/static/uploads/profileImages/";
     //private final String UPLOAD_DIR = "/uploads/profileImages/";
-    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\";
-    private final String UPLOAD_DIR = "/image/";
+    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\profileImage\\";
+    private final String UPLOAD_DIR = "/image/profileImage/";
     public String saveProfileImage(MultipartFile file) throws IOException {
         if(file.isEmpty()){
             return UPLOAD_DIR+"default-profile.png";

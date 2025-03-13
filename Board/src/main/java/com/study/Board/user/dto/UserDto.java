@@ -29,7 +29,7 @@ public class UserDto {
     private MultipartFile profileImage;
 
     public Object getProfileImage(){
-        return (profileImage == null || profileImage.isEmpty()) ? "/image/default-profile.png" : profileImage;
+        return (profileImage == null || profileImage.isEmpty()) ? "/image/profileImage/default-profile.png" : profileImage;
     }
 }
 

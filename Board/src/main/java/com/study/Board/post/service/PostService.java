@@ -12,20 +12,20 @@ import java.util.UUID;
 @Service
 public class PostService {
 
-    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/postImages/";
-
+    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\postImage\\";
+    private final String UPLOAD_DIR = "/image/postImage/";
     public String uploadImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return null;
         }
 
         String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(UPLOAD_DIR + filename);
+        Path path = Paths.get(SAVE_DIR + filename);
 
         Files.createDirectories(path.getParent());
 
         Files.write(path, file.getBytes());
 
-        return "/uploads/postImages/"+filename;
+        return UPLOAD_DIR+filename;
     }
 }

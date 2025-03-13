@@ -21,13 +21,11 @@ public class Post {
     private Long id;
 
     @Column(nullable = false, length = 300)
+    @Lob
     private String content;
 
     @Column(nullable = false)
     private String category;
-
-    @Column(name = "profile_image")
-    private String profileImage;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -36,6 +34,8 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.PENDING;
+
+    private String postProfileImage;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
