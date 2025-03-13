@@ -64,4 +64,8 @@ public class CustomUserDetails implements UserDetails {
     public Collection<SimpleGrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
+
+    public User getUser() {
+        return this.user;
+    }
 }
