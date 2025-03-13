@@ -62,9 +62,10 @@
 
 
         <div class="form-group">
-            <label for="profileImage">Profile Image (Optional):</label>
-            <input type="file" id="profileImage" name="profileImage" accept="image/*">
+            <label for="postProfileImage">Profile Image (Optional):</label>
+            <input type="file" id="postProfileImage" name="postProfileImage" accept="image/*" onchange="previewProfileImage(event)">
         </div>
+        <img id="profilePreview" src="" alt="Profile Preview" style="display:none; width: 100px; height: 100px; object-fit: cover;" >
         <input type="hidden" name="content" id="content">
         <button type="submit" class="submit-btn">Submit</button>
     </form>
@@ -110,5 +111,18 @@
         })
         .catch(error => console.error("Image upload failed:", error));
     }
+
+    function previewProfileImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById("profilePreview");
+        preview.src = e.target.result;
+        preview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
 </script>
 </html>

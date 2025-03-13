@@ -21,6 +21,9 @@ public class Post {
     private Long id;
 
     @Column(nullable = false, length = 300)
+    private String title;
+
+    @Column(nullable = false)
     @Lob
     private String content;
 
