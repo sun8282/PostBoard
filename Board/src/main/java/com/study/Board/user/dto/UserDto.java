@@ -1,14 +1,10 @@
 package com.study.Board.user.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -29,7 +25,11 @@ public class UserDto {
     @NotBlank(message = "User ID is mandatory")
     private String userId;
 
+
     private MultipartFile profileImage;
 
+    public Object getProfileImage(){
+        return (profileImage == null || profileImage.isEmpty()) ? "/image/default-profile.png" : profileImage;
+    }
 }
 

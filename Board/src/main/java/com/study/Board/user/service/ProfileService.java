@@ -12,20 +12,20 @@ import java.util.UUID;
 @Service
 public class ProfileService {
 
-    private final String UPLOAD_DIR = "src/main/resources/static/uploads/profileImages/";
+    //private final String UPLOAD_DIR = "src/main/resources/static/uploads/profileImages/";
     //private final String UPLOAD_DIR = "/uploads/profileImages/";
-    // private final String UPLOAD_DIR = "C:\\Users\\user\\Desktop\\image\\";
+    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\";
+    private final String UPLOAD_DIR = "/image/";
     public String saveProfileImage(MultipartFile file) throws IOException {
         if(file.isEmpty()){
-            return null;
+            return UPLOAD_DIR+"default-profile.png";
         }
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(UPLOAD_DIR + fileName);
+        Path path = Paths.get(SAVE_DIR + fileName);
 
         Files.createDirectories(path.getParent());
 
         Files.write(path, file.getBytes());
-        System.out.println("프로필 이미지 저장");
         return UPLOAD_DIR+fileName;
     }
 }

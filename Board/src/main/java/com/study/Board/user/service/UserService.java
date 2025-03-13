@@ -45,7 +45,7 @@ public class UserService {
         user.setUserName(userDto.getUserName());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setUserEmail(userDto.getUserEmail());
-        user.setProfileImage(profileImagePath != null ? profileImagePath : "default-profile.png");
+        user.setProfileImage(profileImagePath);
     }
 }
 
