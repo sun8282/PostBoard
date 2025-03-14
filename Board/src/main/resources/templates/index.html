@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/header.css}">
+    <link rel="stylesheet" th:href="@{/init.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
     <style>
-        body {
-     font-family: sans-serif;
-     margin: 0;
-     padding: 0;
-     color: #333;
- }
 
 
  /* 프로필 이미지 스타일 */
@@ -93,18 +89,13 @@
  }
 
  /* 푸터 스타일은 fragments/footer.html 에 따라 조정 */
- footer {
-     text-align: center;
-     padding: 20px;
-     border-top: 1px solid #eee;
-     background-color: white; /* 이미지의 푸터 배경색 */
- }
+
     </style>
 </head>
 <body>
 
 <div th:insert="~{fragments/header :: header}"></div>
-
+<div class="wrapper">
 <h1>Welcome, <span th:text="${currentUser.getUsername()}"></span>!</h1>
 
 <div class="profile-container">
@@ -134,10 +125,9 @@
         </div>
     </div>
 </div>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
-<footer>
-    <div th:insert="~{fragments/footer :: footer}"></div>
-</footer>
 
 </body>
 </html>

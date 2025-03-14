@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
+<link rel="stylesheet" th:href="@{/header.css}">
+<link rel="stylesheet" th:href="@{/init.css}">
+<link rel="stylesheet" th:href="@{/footer.css}">
 <body>
 
 <div th:insert="~{fragments/header :: header}"></div>
+<div class="wrapper">
 <h2>login</h2>
 
 <form method="post" action="/login">
@@ -18,6 +22,7 @@
 
     <button type="submit">Login</button>
 </form>
+</div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

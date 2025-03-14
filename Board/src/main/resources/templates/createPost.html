@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Post</title>
+    <link rel="stylesheet" th:href="@{/header.css}">
+    <link rel="stylesheet" th:href="@{/init.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
     <style>
-        .container {
+        .postContainer {
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
@@ -42,7 +45,8 @@
 </head>
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
-<div class="container">
+<div class="wrapper">
+<div class="postContainer">
     <h2>Create a New Post</h2>
     <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
 
@@ -74,6 +78,7 @@
         <input type="hidden" name="content" id="content">
         <button type="submit" class="submit-btn">Submit</button>
     </form>
+</div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>

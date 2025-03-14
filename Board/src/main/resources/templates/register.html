@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{/header.css}">
+    <link rel="stylesheet" th:href="@{/init.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
 </head>
 <style>
     .profile-container {
@@ -24,6 +27,7 @@
 <body>
 
 <div th:insert="~{fragments/header :: header}"></div>
+<div class="wrapper">
 <h2>register</h2>
 
 <form th:action="@{/register}" method="post" enctype="multipart/form-data">
@@ -39,6 +43,7 @@
     <label>name: <input type="text" name="userName" required></label><br>
     <button type="submit">회원가입</button>
 </form>
+</div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 <script>

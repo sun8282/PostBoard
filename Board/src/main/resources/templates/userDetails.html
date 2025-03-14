@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>User Details</title>
+    <link rel="stylesheet" th:href="@{/header.css}">
+    <link rel="stylesheet" th:href="@{/init.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
     <style>
         .profile-container {
             text-align: center;
@@ -33,6 +36,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
+<div class="wrapper">
 <div class="profile-container">
     <h1>User Profile</h1>
 
@@ -47,6 +51,7 @@
     <a th:href="@{/user/{userId}/edit(userId=${currentUser.getUserId()})}">
         <button class="edit-btn">Edit Profile</button>
     </a>
+</div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
