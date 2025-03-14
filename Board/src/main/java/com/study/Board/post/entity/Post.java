@@ -4,9 +4,11 @@ import com.study.Board.user.entity.User;
 
 import jakarta.persistence.*;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.ErrorResponse;
 
 import java.time.LocalDateTime;
 
@@ -42,4 +44,13 @@ public class Post {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Builder
+    private Post(String title, String content, String category, User user, String postProfileImage) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.user = user;
+        this.postProfileImage = postProfileImage;
+    }
 }

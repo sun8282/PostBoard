@@ -33,10 +33,10 @@ public class PostController {
 
     @PostMapping("")
     public String createPost(@ModelAttribute PostDto postDto, @AuthenticationPrincipal CustomUserDetails currentUser, BindingResult bindingResult,
-                             @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException{
+                             @RequestParam(value = "postProfileImage", required = false) MultipartFile postProfileImage) throws IOException{
 
-        User user = currentUser.getUser();
-        postService.createPost(postDto, user);
+        String profileImagePath = postService.uploadImage(postProfileImage);
+        postService.createPost(postDto, currentUser, profileImagePath);
         return "redirect:/";
     }
 }

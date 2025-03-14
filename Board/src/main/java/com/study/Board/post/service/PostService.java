@@ -4,7 +4,9 @@ import com.study.Board.post.dto.PostDto;
 import com.study.Board.post.entity.Post;
 import com.study.Board.post.repository.PostRepository;
 import com.study.Board.user.entity.User;
+import com.study.Board.user.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +14,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,7 +29,7 @@ public class PostService {
     public String uploadImage(MultipartFile file) throws IOException {
 
         if (file.isEmpty()) {
-            return null;
+            return UPLOAD_DIR+"default-profile.png";
         }
 
         String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -38,15 +42,18 @@ public class PostService {
         return UPLOAD_DIR + filename;
     }
 
-    public void createPost(PostDto postDto, User user) {
+    public void createPost(PostDto postDto, @AuthenticationPrincipal CustomUserDetails currentUser, String profileImagePath) {
 
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setCategory(postDto.getCategory());
-        post.setPostProfileImage(postDto.getPostProfileImage());
-        post.setUser(user);
+        Post newPost = postDto.toEntity(currentUser, profileImagePath);
 
-        postRepository.save(post);
+        postRepository.save(newPost);
+    }
+
+    public List<Post> getAllPosts() {
+        List<Post> postArr = postRepository.findAll();
+        for (Post post : postArr) {
+
+        }
+        return postRepository.findAll();
     }
 }

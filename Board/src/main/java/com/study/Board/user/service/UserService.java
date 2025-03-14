@@ -46,5 +46,11 @@ public class UserService {
         );
         SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
+
+    public User findCurrentUser(String userId) {
+        User findUser = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User with ID " +userId + " not found."));
+        return findUser;
+    }
 }
 
