@@ -1,6 +1,6 @@
 package com.study.Board.user.controller;
 
-import com.study.Board.user.dto.UserDto;
+import com.study.Board.user.dto.RegisterDto;
 import com.study.Board.user.service.CustomUserDetails;
 import com.study.Board.user.service.ProfileService;
 import com.study.Board.user.service.UserService;
@@ -29,19 +29,20 @@ public class UserController {
     @GetMapping("/{userId}")
     public String userDetails(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
         model.addAttribute("currentUser", currentUser);
+        System.out.println(currentUser.getProfileImage());
         return "userDetails";
     }
 
     @GetMapping("/{userId}/edit")
     public String userEdit(Model model, @AuthenticationPrincipal CustomUserDetails currentUser) {
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("userDto", new RegisterDto());
         model.addAttribute("currentUser", currentUser);
         return "userEdit";
     }
 
     @PatchMapping("/{userId}")
     public String editResponse(Model model, @AuthenticationPrincipal CustomUserDetails currentUser,
-                               @ModelAttribute("userDto") @Valid UserDto userDto,
+                               @ModelAttribute("userDto") @Valid RegisterDto userDto,
                                BindingResult bindingResult,
                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage
     ) throws IOException {
@@ -49,7 +50,7 @@ public class UserController {
             for (ObjectError error : bindingResult.getAllErrors()) {
                 System.out.println("Error: " + error.getDefaultMessage());
             }
-            model.addAttribute("userDto", new UserDto());
+            model.addAttribute("userDto", new RegisterDto());
             model.addAttribute("currentUser", currentUser);
             return "userEdit";
         }

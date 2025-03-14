@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class RegisterDto {
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Please provide a valid email")

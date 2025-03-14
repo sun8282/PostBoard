@@ -25,7 +25,7 @@
 <div class="profile-container">
         <a th:href="@{'/user/' + ${currentUser.getUserId()}}">
             <h1 th:text="${currentUser.getProfileImage()}"></h1>
-        <img class="profile-image" th:if="${currentUser != null}" th:src="${currentUser.getProfileImage()}" alt="Profile Image">
+        <img class="profile-image" th:if="${currentUser != null}" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image">
         </a>
 </div>
 <h2>Posts</h2>

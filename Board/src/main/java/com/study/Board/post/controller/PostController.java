@@ -1,11 +1,9 @@
 package com.study.Board.post.controller;
 
 import com.study.Board.post.dto.PostDto;
-import com.study.Board.post.entity.Post;
 import com.study.Board.post.repository.PostRepository;
 
 import com.study.Board.post.service.PostService;
-import com.study.Board.user.dto.UserDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;

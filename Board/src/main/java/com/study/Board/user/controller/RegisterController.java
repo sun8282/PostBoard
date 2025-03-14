@@ -1,6 +1,6 @@
 package com.study.Board.user.controller;
 
-import com.study.Board.user.dto.UserDto;
+import com.study.Board.user.dto.RegisterDto;
 import com.study.Board.user.service.ProfileService;
 import com.study.Board.user.service.UserService;
 
@@ -25,12 +25,12 @@ public class RegisterController {
 
     @GetMapping("")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("userDto", new RegisterDto());
         return "register";
     }
 
     @PostMapping("")
-    public String registerUser(@ModelAttribute("userDto") @Valid UserDto userDto,
+    public String registerUser(@ModelAttribute("userDto") @Valid RegisterDto userDto,
                                BindingResult bindingResult,
                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
         if (bindingResult.hasErrors()) {
