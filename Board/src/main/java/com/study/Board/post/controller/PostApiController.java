@@ -1,14 +1,19 @@
 package com.study.Board.post.controller;
 
+import com.study.Board.post.service.Base64Service;
 import com.study.Board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -16,6 +21,7 @@ import java.util.Map;
 public class PostApiController {
 
     private final PostService postService;
+    private final Base64Service base64Service;
 
     @PostMapping("/upload-image")
     @ResponseBody
@@ -24,5 +30,6 @@ public class PostApiController {
         System.out.println(imageUrl);
         return Collections.singletonMap("url", imageUrl);
     }
+
 }
 

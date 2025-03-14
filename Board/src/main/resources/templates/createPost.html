@@ -49,7 +49,6 @@
 <div class="postContainer">
     <h2>Create a New Post</h2>
     <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
-
         <div class="form-group">
             <label for="category">Category:</label>
             <select id="category" name="category" required>
@@ -69,26 +68,23 @@
             <div id="editor"></div>
         </div>
 
-
         <div class="form-group">
             <label for="postProfileImage">Profile Image (Optional):</label>
             <input type="file" id="postProfileImage" name="postProfileImage" accept="image/*" onchange="previewProfileImage(event)">
         </div>
+
         <img id="profilePreview" src="" alt="Profile Preview" style="display:none; width: 100px; height: 100px; object-fit: cover;" >
         <input type="hidden" name="content" id="content">
         <button type="submit" class="submit-btn">Submit</button>
     </form>
+
 </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 <script>
-
-    document.querySelector("form").onsubmit = function() {
-        document.querySelector("#content").value = quill.root.innerHTML;
-    };
-
-    var quill = new Quill('#editor', {
+    // Quill 에디터 초기화
+    const quill = new Quill('#editor', {
         theme: 'snow',
         placeholder: 'Write your post here...',
         modules: {
@@ -100,10 +96,84 @@
             ]
         }
     });
+    document.querySelector(".submit-btn").addEventListener("click", function(e) {
+    e.preventDefault();
 
+    // Quill 에디터의 HTML 콘텐츠를 hidden 필드에 저장
+    let contentField = document.querySelector("#content");
+    contentField.value = quill.root.innerHTML;
+
+    // Base64 이미지를 수집하여 업로드
+    let base64Images = [];
+    quill.getContents().ops.forEach(function(op) {
+        if (op.insert && op.insert.image) {
+            const imageBase64 = op.insert.image.split(",")[1]; // Base64 부분만 추출
+            base64Images.push(imageBase64); // Base64 이미지를 배열에 추가
+        }
+    });
+
+    // Base64 이미지가 있으면 서버로 업로드
+    if (base64Images.length > 0) {
+        Promise.all(base64Images.map(base64Image => {
+            const formData = new FormData();
+            formData.append('image', base64Image); // Base64 이미지를 FormData에 추가
+            return fetch('/api/posts/upload-base64-image', {  // Base64 이미지 전송을 위한 엔드포인트
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    let range = quill.getSelection();
+                    if (range) {
+                        quill.insertEmbed(range.index, 'image', data.url); // 받은 URL로 이미지 삽입
+                    }
+                } else {
+                    alert("이미지 업로드 실패: 서버에서 URL을 반환하지 않았습니다.");
+                }
+            })
+            .catch(error => {
+                console.error("Image upload failed:", error);
+                alert("이미지 업로드 중 오류가 발생했습니다.");
+            });
+        }))
+        .then(() => {
+            // 이미지 업로드가 완료되면 폼 제출
+            document.querySelector("form").submit();
+        });
+    } else {
+        // Base64 이미지가 없으면 바로 폼 제출
+        document.querySelector("form").submit();
+    }
+});
+
+
+
+    // 프로필 이미지 미리보기
+    function previewProfileImage(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById("profilePreview");
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // 이미지 업로드 처리 함수
     function uploadImage(event) {
         const file = event.target.files[0];
         if (!file) return;
+
+        // 허용된 확장자 체크 (JPG, PNG, GIF, WEBP만 허용)
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (!allowedTypes.includes(file.type)) {
+            alert("허용되지 않은 파일 형식입니다. JPG, PNG, GIF, WEBP만 업로드 가능합니다.");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("imageFile", file);
@@ -116,23 +186,20 @@
         .then(data => {
             if (data.url) {
                 let range = quill.getSelection();
-                quill.insertEmbed(range.index, 'image', data.url);
+                if (range) {
+                    quill.insertEmbed(range.index, 'image', data.url);
+                } else {
+                    alert("이미지를 삽입할 위치를 찾을 수 없습니다.");
+                }
+            } else {
+                alert("이미지 업로드 실패: 서버에서 URL을 반환하지 않았습니다.");
             }
         })
-        .catch(error => console.error("Image upload failed:", error));
+        .catch(error => {
+            console.error("Image upload failed:", error);
+            alert("이미지 업로드 중 오류가 발생했습니다.");
+        });
     }
-
-    function previewProfileImage(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const preview = document.getElementById("profilePreview");
-        preview.src = e.target.result;
-        preview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-}
 </script>
+
 </html>
