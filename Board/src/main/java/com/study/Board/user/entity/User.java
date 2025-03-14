@@ -2,6 +2,7 @@ package com.study.Board.user.entity;
 
 import com.study.Board.post.entity.Post;
 import com.study.Board.user.dto.RegisterDto;
+import com.study.Board.user.dto.UpdateDto;
 import jakarta.persistence.*;
 
 import lombok.Builder;
@@ -67,7 +68,7 @@ public class User implements UserDetails {
         this.profileImage = profileImage;
     }
 
-    public void updateInfo(RegisterDto userDto, String profileImagePath) {
+    public void updateInfo(UpdateDto userDto, String profileImagePath) {
         this.userName = userDto.getUserName();
         this.userEmail = userDto.getUserEmail();
         this.userId = userDto.getUserId();

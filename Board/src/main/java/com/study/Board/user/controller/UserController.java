@@ -1,6 +1,7 @@
 package com.study.Board.user.controller;
 
 import com.study.Board.user.dto.RegisterDto;
+import com.study.Board.user.dto.UpdateDto;
 import com.study.Board.user.service.CustomUserDetails;
 import com.study.Board.user.service.ProfileService;
 import com.study.Board.user.service.UserService;
@@ -42,7 +43,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public String editResponse(Model model, @AuthenticationPrincipal CustomUserDetails currentUser,
-                               @ModelAttribute("userDto") @Valid RegisterDto userDto,
+                               @ModelAttribute("userDto") @Valid UpdateDto userDto,
                                BindingResult bindingResult,
                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage
     ) throws IOException {

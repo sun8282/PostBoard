@@ -1,6 +1,7 @@
 package com.study.Board.user.service;
 
 import com.study.Board.user.dto.RegisterDto;
+import com.study.Board.user.dto.UpdateDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(RegisterDto userDto, String profileImagePath) {
+    public void updateUser(UpdateDto userDto, String profileImagePath) {
 
         User findUser = userRepository.findByUserId(userDto.getUserId())
                 .orElseThrow(() -> new UsernameNotFoundException("User with ID " + userDto.getUserId() + " not found."));
