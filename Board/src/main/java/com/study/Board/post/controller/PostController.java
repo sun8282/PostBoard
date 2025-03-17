@@ -7,6 +7,7 @@ import com.study.Board.post.service.Base64Service;
 import com.study.Board.post.service.PostService;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.service.CustomUserDetails;
+import com.study.Board.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +28,7 @@ public class PostController {
 
     private final PostRepository postRepository;
     private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/new")
     public String showPostForm(Model model) {
@@ -36,14 +38,14 @@ public class PostController {
     }
 
     @PostMapping("")
-    public String createPost(@ModelAttribute PostDto postDto, @AuthenticationPrincipal CustomUserDetails currentUser, BindingResult bindingResult,
+    public String createPost(@ModelAttribute PostDto postDto, BindingResult bindingResult,
                              @RequestParam(value = "postProfileImage", required = false) MultipartFile postProfileImage) throws IOException{
 
         System.out.println("Received title: " + postDto.getTitle());
         System.out.println("Received content: " + postDto.getContent());
 
         String profileImagePath = postService.uploadImage(postProfileImage);
-        postService.createPost(postDto, currentUser, profileImagePath);
+        postService.createPost(postDto, userService.findCurrentUser(), profileImagePath);
         return "redirect:/";
     }
 

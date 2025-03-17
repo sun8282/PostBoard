@@ -45,7 +45,7 @@
     <form th:action="@{/user/{userId}(userId=${currentUser.getUserId()})}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_method" value="PATCH"/>
         <div class="profile-container" onclick="document.getElementById('profileInput').click();">
-            <img id="profilePreview" th:src="@{${currentUser.getProfileImage()}}" alt="Profile Image" class="profile-img">
+            <img id="profilePreview" th:src="@{/image/profileImage/default-profile.png}" alt="Profile Image" class="profile-img">
             <input type="file" id="profileInput" name="profileImage" class="file-input" accept="image/*"
                    onchange="previewImage(event)">
         </div>
@@ -53,7 +53,6 @@
         <div class="user-info">
             <p><strong>Username:</strong> <input th:value="${currentUser.getUsername()}" name="userName" required/></p>
             <p><strong>Email:</strong> <input th:value="${currentUser.getUserEmail()}" name="userEmail" required/></p>
-            <p><strong>User ID:</strong> <input th:value="${currentUser.getUserId()}" name="userId" required/></p>
         </div>
 
         <button type="submit" class="edit-btn">submit</button>

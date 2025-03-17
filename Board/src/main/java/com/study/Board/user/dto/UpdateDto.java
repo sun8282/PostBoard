@@ -21,9 +21,6 @@ public class UpdateDto {
     @NotBlank(message = "Username is mandatory")
     private String userName;
 
-    @NotBlank(message = "User ID is mandatory")
-    private String userId;
-
     private MultipartFile profileImage;
 
     public Object getProfileImage(){

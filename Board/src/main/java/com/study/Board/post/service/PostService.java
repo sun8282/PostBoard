@@ -50,7 +50,7 @@ public class PostService {
         return UPLOAD_DIR + filename;
     }
 
-    public void createPost(PostDto postDto, @AuthenticationPrincipal CustomUserDetails currentUser, String profileImagePath) {
+    public void createPost(PostDto postDto, User currentUser, String profileImagePath) {
         Post newPost = postDto.toEntity(currentUser, profileImagePath);
         postRepository.save(newPost);
     }

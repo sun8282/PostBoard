@@ -1,5 +1,6 @@
 package com.study.Board.user.service;
 
+import com.study.Board.user.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

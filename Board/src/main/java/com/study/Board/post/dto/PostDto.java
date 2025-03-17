@@ -23,12 +23,12 @@ public class PostDto {
 
     private MultipartFile postProfileImage;
 
-    public Post toEntity(CustomUserDetails currentUser, String profileImagePath) {
+    public Post toEntity(User currentUser, String profileImagePath) {
         return Post.builder()
                 .title(title)
                 .content(content)
                 .category(category)
-                .user(currentUser.getUser())
+                .user(currentUser)
                 .postProfileImage(profileImagePath)
                 .build();
     }

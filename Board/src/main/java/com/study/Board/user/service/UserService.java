@@ -4,15 +4,25 @@ import com.study.Board.user.dto.RegisterDto;
 import com.study.Board.user.dto.UpdateDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional(readOnly = true)
+import java.util.ArrayList;
+import java.util.List;
+
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,7 +30,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public void registerUser(RegisterDto userDto, String profileImagePath) {
 
         String encodedPassword = passwordEncoder.encode(userDto.getPassword());
@@ -29,11 +38,8 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    @Transactional
-    public void updateUser(UpdateDto userDto, String profileImagePath) {
-
-        User findUser = userRepository.findByUserId(userDto.getUserId())
-                .orElseThrow(() -> new UsernameNotFoundException("User with ID " + userDto.getUserId() + " not found."));
+    public void updateUser(UpdateDto userDto, String profileImagePath, HttpServletRequest request) {
+        User findUser = findCurrentUser();
 
         findUser.updateInfo(userDto, profileImagePath);
 
@@ -44,12 +50,17 @@ public class UserService {
                 null,
                 updatedUserDetails.getAuthorities()
         );
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(newAuth);
+        SecurityContextHolder.setContext(context);
     }
 
-    public User findCurrentUser(String userId) {
-        User findUser = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User with ID " +userId + " not found."));
+
+    public User findCurrentUser() {
+        String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+        User findUser = userRepository.findByUserId(currentUserId)
+                .orElseThrow(() -> new UsernameNotFoundException("User with ID " +currentUserId + " not found."));
         return findUser;
     }
 }
