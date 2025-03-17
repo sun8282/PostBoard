@@ -48,7 +48,7 @@
 <div class="wrapper">
 <div class="postContainer">
     <h2>Create a New Post</h2>
-    <form th:action="@{/posts}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/posts}" method="post" enctype="multipart/form-data" class="form">
         <div class="form-group">
             <label for="category">Category:</label>
             <select id="category" name="category" required>
@@ -65,7 +65,9 @@
 
         <div class="form-group">
             <label for="editor">Content:</label>
-            <div id="editor"></div>
+            <div class="quill-container">
+                <div id="editor"></div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -75,6 +77,7 @@
 
         <img id="profilePreview" src="" alt="Profile Preview" style="display:none; width: 100px; height: 100px; object-fit: cover;" >
         <input type="hidden" name="content" id="content">
+        <input type="hidden" name="images" id="imagesBase64">
         <button type="submit" class="submit-btn">Submit</button>
     </form>
 
@@ -91,14 +94,28 @@
             toolbar: [
                 [{ header: [1, 2, 3, 4, false] }],
                 ['bold', 'italic', 'underline'],
-                ['code-block'],
+                ['image','code-block'],
                 [{ list: 'ordered' }, { list: 'bullet' }]
             ]
         }
     });
 
+    document.querySelector('.submit-btn').addEventListener("click",(e) =>{
+        e.preventDefault();
+        const content = quill.root.innerHTML;
+        document.getElementById('content').value = content;
 
+        const imageUrls = [];
+        const images = document.querySelectorAll('.quill-container img');
+        images.forEach(function(img) {
+            if (img.src.startsWith('data:image')) {
+                imageUrls.push(img.src);
+            }
+        });
+        document.getElementById('imagesBase64').value = JSON.stringify(imageUrls);
 
+        document.querySelector('.form').submit();
+    });
 
     // 프로필 이미지 미리보기
     function previewProfileImage(event) {
@@ -114,43 +131,7 @@
         reader.readAsDataURL(file);
     }
 
-    // 이미지 업로드 처리 함수
-    function uploadImage(event) {
-        const file = event.target.files[0];
-        if (!file) return;
 
-        // 허용된 확장자 체크 (JPG, PNG, GIF, WEBP만 허용)
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (!allowedTypes.includes(file.type)) {
-            alert("허용되지 않은 파일 형식입니다. JPG, PNG, GIF, WEBP만 업로드 가능합니다.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("imageFile", file);
-
-        fetch("/api/posts/upload-image", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.url) {
-                let range = quill.getSelection();
-                if (range) {
-                    quill.insertEmbed(range.index, 'image', data.url);
-                } else {
-                    alert("이미지를 삽입할 위치를 찾을 수 없습니다.");
-                }
-            } else {
-                alert("이미지 업로드 실패: 서버에서 URL을 반환하지 않았습니다.");
-            }
-        })
-        .catch(error => {
-            console.error("Image upload failed:", error);
-            alert("이미지 업로드 중 오류가 발생했습니다.");
-        });
-    }
 </script>
 
 </html>

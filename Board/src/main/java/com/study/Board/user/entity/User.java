@@ -46,7 +46,7 @@ public class User implements UserDetails {
     private String userId;
 
     @OneToMany(mappedBy = "user")
-    private List<Post> posts = new ArrayList<Post>();;
+    private List<Post> posts = new ArrayList<Post>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

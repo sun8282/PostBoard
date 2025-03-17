@@ -8,9 +8,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.ErrorResponse;
 
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,7 +27,6 @@ public class Post {
     @Column(nullable = false, length = 300)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
     @Lob
     private String content;
 
@@ -44,6 +45,9 @@ public class Post {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostImage> images = new ArrayList<PostImage>();
 
     @Builder
     private Post(String title, String content, String category, User user, String postProfileImage) {

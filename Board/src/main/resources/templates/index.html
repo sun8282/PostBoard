@@ -124,12 +124,12 @@
         <div class="post-details">
             <h3 class="post-title" th:text="${post.title}">Post Title</h3>
             <p class="post-meta">
-                <img th:src="@{${post.getUser().getProfileImage()}}" class="postUserProfile">
                 <span th:text="${post.getUser().getUserId()}">Author</span> |
                 <span th:text="${#temporals.format(post.createdAt, 'yyyy.MM.dd')}">Date</span>
                 <span class="like-count">좋아요 0</span>
             </p>
-            <p class="post-content" th:text="${post.content}">Post Content</p>
+            <img th:src="@{${post.getUser().getProfileImage()}}" class="postUserProfile">
+            <p class="post-content" th:utext="${post.content}">Post Content</p>
         </div>
     </div>
 </div>

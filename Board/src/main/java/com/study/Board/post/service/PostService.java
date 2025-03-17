@@ -2,6 +2,8 @@ package com.study.Board.post.service;
 
 import com.study.Board.post.dto.PostDto;
 import com.study.Board.post.entity.Post;
+import com.study.Board.post.entity.PostImage;
+import com.study.Board.post.repository.PostImageRepository;
 import com.study.Board.post.repository.PostRepository;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.service.CustomUserDetails;
@@ -10,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,8 +27,11 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\postImage\\";
-    private final String UPLOAD_DIR = "/image/postImage/";
+    private final PostImageRepository postImageRepository;
+
+    private final Base64Service base64Service;
+    private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\postProfileImage\\";
+    private final String UPLOAD_DIR = "/image/postProfileImage/";
 
     public String uploadImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -51,7 +57,19 @@ public class PostService {
     }
 
     public void createPost(PostDto postDto, User currentUser, String profileImagePath) {
+
         Post newPost = postDto.toEntity(currentUser, profileImagePath);
+        List<PostImage> images = new ArrayList<>();
+        for (String base64Image : postDto.getImagesBase64()){
+
+            String imagePath = base64Service.saveImage(base64Image);
+
+            PostImage newPostImage = postDto.toEntity(imagePath, newPost);
+            postImageRepository.save(newPostImage);
+            images.add(newPostImage);
+        }
+
+        newPost.setImages(images);
         postRepository.save(newPost);
     }
 
