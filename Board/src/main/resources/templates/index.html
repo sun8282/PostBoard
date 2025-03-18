@@ -120,6 +120,7 @@
 
 <div class="posts-container">
     <div class="post-item" th:each="post : ${posts}">
+        <a th:href="@{ '/posts/' + ${post.getId()}}">
         <img class="post-image" th:src="@{${post.postProfileImage}}" alt="Post Image">
         <div class="post-details">
             <h3 class="post-title" th:text="${post.title}">Post Title</h3>
@@ -129,8 +130,8 @@
                 <span class="like-count">좋아요 0</span>
             </p>
             <img th:src="@{${post.getUser().getProfileImage()}}" class="postUserProfile">
-            <p class="post-content" th:utext="${post.content}">Post Content</p>
         </div>
+        </a>
     </div>
 </div>
 </div>

@@ -1,19 +1,15 @@
 package com.study.Board.post.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.study.Board.post.entity.Post;
 import com.study.Board.post.entity.PostImage;
 import com.study.Board.user.entity.User;
-import com.study.Board.user.service.CustomUserDetails;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter

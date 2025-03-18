@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" th:href="@{/header.css}">
+    <link rel="stylesheet" th:href="@{/init.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <style>
+        .profile-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .user-info {
+            margin-top: 20px;
+        }
+        .edit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div class="wrapper">
+<div class="profile-container">
+    <h1>Post Details</h1>
+
+    <div class="posts-container">
+        <h1 th:text="${postDto.getTitle()}"></h1>
+            <div class="post-details">
+                <h3 class="post-title" th:text="${postDto.getTitle()}">Post Title</h3>
+                <p class="post-meta">
+                    <div class="quill-container">
+                        <div id="editor" th:utext="${postDto.getContent()}"></div>
+                    </div>
+                    <span class="like-count">좋아요 0</span>
+                </p>
+            </div>
+<!--        <button><a th:href="${}"></a></button>-->
+    </div>
+</div>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

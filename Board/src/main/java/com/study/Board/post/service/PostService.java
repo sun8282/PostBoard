@@ -6,20 +6,18 @@ import com.study.Board.post.entity.PostImage;
 import com.study.Board.post.repository.PostImageRepository;
 import com.study.Board.post.repository.PostRepository;
 import com.study.Board.user.entity.User;
-import com.study.Board.user.service.CustomUserDetails;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -78,4 +76,20 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public PostDto findById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("post를 찾을 수 없습니다."));
+        PostDto postDto = new PostDto();
+        postDto.setTitle(post.getTitle());
+        postDto.setCategory(post.getCategory());
+        postDto.setContent(post.getContent());
+        // postDto.setPostProfileImage("");
+        return postDto;
+    }
+
+    public boolean isNotWirteUser(Long postId, Long id) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("post를 찾을 수 없습니다."));
+        return id != post.getUser().getId();
+    }
 }
