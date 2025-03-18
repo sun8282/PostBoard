@@ -1,5 +1,6 @@
 package com.study.Board.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.study.Board.post.entity.Post;
 import com.study.Board.post.entity.PostImage;
 import com.study.Board.user.entity.User;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -28,13 +30,14 @@ public class PostDto {
 
     private MultipartFile postProfileImage;
 
-    private List<String> imagesBase64;
 
-    public List<String> getImagesBase64() {
-        if (imagesBase64 == null) {
+    private List<String> imageUrls;
+
+    public List<String> getImageUrls() {
+        if (imageUrls == null) {
             return Collections.emptyList(); // 빈 리스트 반환
         }
-        return imagesBase64;
+        return imageUrls;
     }
 
     public Post toEntity(User currentUser, String profileImagePath) {

@@ -59,12 +59,13 @@ public class PostService {
     public void createPost(PostDto postDto, User currentUser, String profileImagePath) {
 
         Post newPost = postDto.toEntity(currentUser, profileImagePath);
+        postRepository.save(newPost);
+
         List<PostImage> images = new ArrayList<>();
-        for (String base64Image : postDto.getImagesBase64()){
 
-            String imagePath = base64Service.saveImage(base64Image);
-
-            PostImage newPostImage = postDto.toEntity(imagePath, newPost);
+        for (String imageUrl : postDto.getImageUrls()){
+            imageUrl = imageUrl.replace("[", "").replace("]", "").trim();
+            PostImage newPostImage = postDto.toEntity(imageUrl, newPost);
             postImageRepository.save(newPostImage);
             images.add(newPostImage);
         }

@@ -77,7 +77,7 @@
 
         <img id="profilePreview" src="" alt="Profile Preview" style="display:none; width: 100px; height: 100px; object-fit: cover;" >
         <input type="hidden" name="content" id="content">
-        <input type="hidden" name="images" id="imagesBase64">
+        <input type="hidden" name="imageUrls" id="imageUrls">
         <button type="submit" class="submit-btn">Submit</button>
     </form>
 
@@ -94,44 +94,71 @@
             toolbar: [
                 [{ header: [1, 2, 3, 4, false] }],
                 ['bold', 'italic', 'underline'],
-                ['image','code-block'],
+                ['image', 'code-block'],
                 [{ list: 'ordered' }, { list: 'bullet' }]
             ]
         }
     });
 
-    document.querySelector('.submit-btn').addEventListener("click",(e) =>{
+
+    async function uploadImage(base64Image) {
+        try {
+            const response = await fetch('/api/posts/upload-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: base64Image })
+            });
+
+            const result = await response.json();
+            return result.imageUrl;
+        } catch (error) {
+            console.error("이미지 업로드 실패:", error);
+            return null;
+        }
+    }
+
+    document.querySelector('.submit-btn').addEventListener("click", async (e) => {
         e.preventDefault();
+
         const content = quill.root.innerHTML;
         document.getElementById('content').value = content;
 
-        const imageUrls = [];
-        const images = document.querySelectorAll('.quill-container img');
-        images.forEach(function(img) {
+        const imageElements = document.querySelectorAll('.quill-container img');
+        let imageUrls = [];
+
+        for (const img of imageElements) {
             if (img.src.startsWith('data:image')) {
+                const uploadedUrl = await uploadImage(img.src);
+                if (uploadedUrl) {
+                    imageUrls.push(uploadedUrl);
+                }
+            } else {
                 imageUrls.push(img.src);
             }
-        });
-        document.getElementById('imagesBase64').value = JSON.stringify(imageUrls);
+        }
+
+        document.getElementById('imageUrls').value = JSON.stringify(imageUrls);
+        console.log("변환된 이미지 URL 리스트:", imageUrls);
 
         document.querySelector('.form').submit();
     });
 
-    // 프로필 이미지 미리보기
-    function previewProfileImage(event) {
-        const file = event.target.files[0];
-        if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById("profilePreview");
-            preview.src = e.target.result;
-            preview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-    }
+            // 프로필 이미지 미리보기
+        function previewProfileImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById("profilePreview");
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
 </script>
 
 </html>

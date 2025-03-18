@@ -21,16 +21,17 @@ public class Base64Service {
     private final String SAVE_DIR = "C:\\Users\\user\\Desktop\\image\\postImage\\";
     private final String UPLOAD_DIR = "/image/postImage/";
 
-    public String saveImage(String base64Image) {
+    public String saveImage(String base64Image) throws IOException {
 
-        byte[] decodedBytes = Base64.getDecoder().decode(base64Image.split(",")[1]);
-        Path imagePath = Paths.get(SAVE_DIR + UUID.randomUUID().toString());
 
-        try {
-            Files.write(imagePath, decodedBytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return UPLOAD_DIR + imagePath.toString();
+        byte[] imageBytes = Base64.getDecoder().decode(base64Image.split(",")[1]);
+
+        String fileName = UUID.randomUUID() + ".png";
+        Path filePath = Paths.get(SAVE_DIR + fileName);
+
+        Files.write(filePath, imageBytes);
+
+        String imageUrl = UPLOAD_DIR + fileName;
+        return imageUrl;
     }
 }
