@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/posts/**", "/post/**").authenticated()
                         .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

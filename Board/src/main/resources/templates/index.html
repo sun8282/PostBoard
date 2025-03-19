@@ -95,6 +95,28 @@
     object-fit: cover;
     border: 2px solid #ddd;
  }
+   .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .pagination a {
+        padding: 8px 12px;
+        margin: 0 4px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        background-color: #f0f0f0;
+    }
+    .pagination a:hover {
+        background-color: #ddd;
+    }
+    .pagination .active {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+    }
  /* 푸터 스타일은 fragments/footer.html 에 따라 조정 */
 
     </style>
@@ -134,13 +156,18 @@
         </a>
     </div>
 </div>
-    <div>
-        <a th:if="${currentPage > 0}" th:href="@{/(page=${currentPage - 1}, size=10)}">이전</a>
+</div>
+<div class="pagination">
+    <a th:if="${currentPage > 0}" th:href="@{/(page=${currentPage - 1}, size=6)}">이전</a>
 
-        <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span>
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/(page=${i}, size=6)}"
+           th:text="${i + 1}"
+           th:class="${i == currentPage} ? 'active' : ''">
+        </a>
+    </span>
 
-        <a th:if="${currentPage + 1 < totalPages}" th:href="@{/(page=${currentPage + 1}, size=10)}">다음</a>
-    </div>
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/(page=${currentPage + 1}, size=6)}">다음</a>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 
