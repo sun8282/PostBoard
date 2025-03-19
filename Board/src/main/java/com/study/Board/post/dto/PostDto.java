@@ -31,7 +31,7 @@ public class PostDto {
 
     public List<String> getImageUrls() {
         if (imageUrls == null) {
-            return Collections.emptyList(); // 빈 리스트 반환
+            return Collections.emptyList();
         }
         return imageUrls;
     }

@@ -38,7 +38,6 @@ public class RegisterController {
         }
 
         String profileImagePath = profileService.saveProfileImage(profileImage);
-
         userService.registerUser(userDto, profileImagePath);
 
         return "redirect:/login";

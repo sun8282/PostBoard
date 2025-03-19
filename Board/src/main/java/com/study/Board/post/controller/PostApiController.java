@@ -27,6 +27,7 @@ public class PostApiController {
 
     @PostMapping("/upload-image")
     public ResponseEntity<Map<String, String>> uploadImage(@RequestBody Map<String, String> request) {
+
         try {
             String base64Image = request.get("image");
             if (base64Image == null || base64Image.isEmpty()) {

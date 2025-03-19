@@ -22,8 +22,6 @@ public class Base64Service {
     private final String UPLOAD_DIR = "/image/postImage/";
 
     public String saveImage(String base64Image) throws IOException {
-
-
         byte[] imageBytes = Base64.getDecoder().decode(base64Image.split(",")[1]);
 
         String fileName = UUID.randomUUID() + ".png";

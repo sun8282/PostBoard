@@ -54,11 +54,8 @@ public class UserController {
             for (ObjectError error : bindingResult.getAllErrors()) {
                 System.out.println("Error: " + error.getDefaultMessage());
             }
-            model.addAttribute("userDto", userDto);
-            model.addAttribute("currentUser", userService.findCurrentUser());
             return "userEdit";
         }
-        User currentUser = userService.findCurrentUser();
 
         String profileImagePath = profileService.saveProfileImage(profileImage);
 

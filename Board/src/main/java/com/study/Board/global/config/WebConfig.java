@@ -1,4 +1,4 @@
-package com.study.Board.config;
+package com.study.Board.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

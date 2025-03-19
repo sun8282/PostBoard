@@ -1,4 +1,4 @@
-package com.study.Board.config;
+package com.study.Board.global.config;
 
 import com.study.Board.user.service.CustomUserDetailsService;
 import jakarta.servlet.http.HttpServletRequest;

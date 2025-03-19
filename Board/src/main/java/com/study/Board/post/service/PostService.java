@@ -57,7 +57,6 @@ public class PostService {
     }
 
     public void createPost(PostDto postDto, User currentUser, String profileImagePath) {
-
         Post newPost = postDto.toEntity(currentUser, profileImagePath);
         postRepository.save(newPost);
 
@@ -80,7 +79,6 @@ public class PostService {
         postDto.setTitle(post.getTitle());
         postDto.setCategory(post.getCategory());
         postDto.setContent(post.getContent());
-        // postDto.setPostProfileImage("");
         return postDto;
     }
 

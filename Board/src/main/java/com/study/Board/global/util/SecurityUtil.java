@@ -1,4 +1,4 @@
-package com.study.Board.util;
+package com.study.Board.global.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

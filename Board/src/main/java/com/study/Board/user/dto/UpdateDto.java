@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateDto {
+
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Please provide a valid email")
     private String userEmail;
