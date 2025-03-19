@@ -27,9 +27,11 @@ public class appController {
     @GetMapping("/")
     public String showHome(@RequestParam(name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "size", defaultValue = "6") int size,
+                           @RequestParam(value = "categoryId", required = false) String category,
                            Model model) {
+        Page<Post> posts = postService.isPossibleCategory(category, page, size);
+
         User findUser = userService.findCurrentUser();
-        Page<Post> posts = postService.getAllPosts(page, size);
 
         model.addAttribute("posts", posts);
         model.addAttribute("currentPage", posts.getNumber());

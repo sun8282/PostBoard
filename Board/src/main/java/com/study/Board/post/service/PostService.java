@@ -8,10 +8,7 @@ import com.study.Board.post.repository.PostRepository;
 import com.study.Board.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -113,4 +110,18 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return postRepository.findAll(pageable);
     }
+
+    private Page<Post> getPostsByCategory(String category, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return postRepository.findByCategory(category, pageable);
+    }
+
+    public Page<Post> isPossibleCategory(String category, int page, int size) {
+        if(category == null){
+            return getAllPosts(page, size);
+        }
+        return getPostsByCategory(category, page, size);
+    }
+
+
 }
