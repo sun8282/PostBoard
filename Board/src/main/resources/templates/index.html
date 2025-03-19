@@ -134,6 +134,13 @@
         </a>
     </div>
 </div>
+    <div>
+        <a th:if="${currentPage > 0}" th:href="@{/(page=${currentPage - 1}, size=10)}">이전</a>
+
+        <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span>
+
+        <a th:if="${currentPage + 1 < totalPages}" th:href="@{/(page=${currentPage + 1}, size=10)}">다음</a>
+    </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 

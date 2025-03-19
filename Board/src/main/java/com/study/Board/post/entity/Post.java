@@ -1,5 +1,6 @@
 package com.study.Board.post.entity;
 
+import com.study.Board.post.dto.PostDto;
 import com.study.Board.user.entity.User;
 
 import jakarta.persistence.*;
@@ -9,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,4 +57,11 @@ public class Post {
         this.user = user;
         this.postProfileImage = postProfileImage;
     }
+
+    public void updatePost(PostDto postDto){
+        this.title = postDto.getTitle();
+        this.content = postDto.getContent();
+        this.category = postDto.getCategory();
+    }
+
 }

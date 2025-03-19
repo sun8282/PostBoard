@@ -59,7 +59,6 @@ public class UserController {
             return "userEdit";
         }
         User currentUser = userService.findCurrentUser();
-        System.out.println(currentUser.getProfileImage());
 
         String profileImagePath = profileService.saveProfileImage(profileImage);
 

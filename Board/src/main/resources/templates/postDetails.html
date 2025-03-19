@@ -7,6 +7,10 @@
     <link rel="stylesheet" th:href="@{/init.css}">
     <link rel="stylesheet" th:href="@{/footer.css}">
     <style>
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
         .profile-container {
             text-align: center;
             margin-top: 50px;
@@ -32,6 +36,18 @@
         .edit-btn:hover {
             background-color: #0056b3;
         }
+        .delete-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #E3242B;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #990F02;
+        }
     </style>
 </head>
 <body>
@@ -42,18 +58,19 @@
 
     <div class="posts-container">
         <h1 th:text="${postDto.getTitle()}"></h1>
-<!--            <img class="post-image" th:src="@{${post.postProfileImage}}" alt="Post Image">-->
             <div class="post-details">
                 <h3 class="post-title" th:text="${postDto.getTitle()}">Post Title</h3>
                 <p class="post-meta">
                     <span th:utext="${postDto.getContent()}"></span>
-<!--                    <span th:text="${postDto.getUser().getUserId()}">Author</span> |-->
-<!--                    <span th:text="${#temporals.format(postDto.createdAt, 'yyyy.MM.dd')}">Date</span>-->
                     <span class="like-count">좋아요 0</span>
                 </p>
-<!--                <img th:src="@{${postDto.getUser().getProfileImage()}}" class="postUserProfile">-->
             </div>
-<!--        <button><a th:href="${postDto.get}"></a></button>-->
+        <button class="edit-btn"><a th:href="@{/posts/{postId}/edit(postId=${postId})}">Edit Post</a></button>
+        <form th:action="@{/posts/{postId}(postId=${postId})}" method="post">
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button class="delete-btn" type="submit">Delete Post</button>
+        </form>
+
     </div>
 </div>
 </div>

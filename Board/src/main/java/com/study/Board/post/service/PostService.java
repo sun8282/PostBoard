@@ -8,7 +8,12 @@ import com.study.Board.post.repository.PostRepository;
 import com.study.Board.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,9 +22,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -72,13 +77,8 @@ public class PostService {
         postRepository.save(newPost);
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-
     public PostDto findById(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new EntityNotFoundException("post를 찾을 수 없습니다."));
+        Post post = getPost(postId);
         PostDto postDto = new PostDto();
         postDto.setTitle(post.getTitle());
         postDto.setCategory(post.getCategory());
@@ -88,8 +88,29 @@ public class PostService {
     }
 
     public boolean isNotWirteUser(Long postId, Long id) {
+        Post post = getPost(postId);
+        return id != post.getUser().getId();
+    }
+
+
+
+    public void updatePost(Long postId, PostDto postDto) {
+        Post post = getPost(postId);
+        post.updatePost(postDto);
+    }
+
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
+    private Post getPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("post를 찾을 수 없습니다."));
-        return id != post.getUser().getId();
+        return post;
+    }
+
+    public Page<Post> getAllPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return postRepository.findAll(pageable);
     }
 }

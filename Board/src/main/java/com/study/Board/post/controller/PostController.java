@@ -5,13 +5,17 @@ import com.study.Board.post.entity.Post;
 import com.study.Board.post.repository.PostRepository;
 
 import com.study.Board.post.service.PostService;
+import com.study.Board.user.dto.UpdateDto;
 import com.study.Board.user.entity.User;
 import com.study.Board.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +51,39 @@ public class PostController {
         System.out.println("postId = " + postId);
         PostDto postDto = postService.findById(postId);
         model.addAttribute("postDto", postDto);
+        model.addAttribute("postId", postId);
         return "postDetails";
+    }
+
+    @PatchMapping("/{postId}")
+    public String editResponse(Model model,
+                               @ModelAttribute("postDto") @Valid PostDto postDto,
+                               BindingResult bindingResult,
+                               HttpServletRequest request,
+                               @PathVariable("postId") Long postId)  throws IOException{
+
+        if (bindingResult.hasErrors()) {
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println("Error: " + error.getDefaultMessage());
+            }
+            return "/{postId}/edit";
+        }
+
+        postService.updatePost(postId, postDto);
+
+        return "postDetails";
+    }
+
+    @DeleteMapping("/{postId}")
+    public String deleteResponse(Model model, @PathVariable("postId") Long postId){
+        User user = userService.findCurrentUser();
+        if (postService.isNotWirteUser(postId, user.getId())) {
+            return "redirect:/posts/{postId}?authentication=no";
+        }
+
+        postService.deletePost(postId);
+
+        return "redirect:/";
     }
 
     @GetMapping("/{postId}/edit")
@@ -55,10 +91,11 @@ public class PostController {
 
         User user = userService.findCurrentUser();
         if (postService.isNotWirteUser(postId, user.getId())) {
-            return "redirect:/{postId}?authentication=no";
+            return "redirect:/posts/{postId}?authentication=no";
         }
 
         PostDto postDto = postService.findById(postId);
+        model.addAttribute("postId", postId);
         model.addAttribute("postDto", postDto);
 
         return "postEdit";
